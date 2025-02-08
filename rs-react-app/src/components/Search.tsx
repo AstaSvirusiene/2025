@@ -1,47 +1,64 @@
-import { Component } from 'react';
+import { useEffect, useState } from "react";
+import Section from "./Section";
 
-// interface SearchState {
-//     value?: string;
-//     // data: {
-//     //     name: string,
-//     //     id: number
-//     // }
-//   }
-class Search extends Component {
-  constructor(props: { value: string }) {
-    super(props);
-    this.state = {
-      value: '',
-      // data: Object
-    };
-  }
-
-  fetchData = (value: string) => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${value}`)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-  };
-
-  render() {
-    return (
-      <div>
-        <input
-          autoFocus
-          name="pokemon"
-          onChange={(event) => {
-            this.setState({ value: event.target.value });
-          }}
-          placeholder="pokemon name ?"
-        ></input>
-        <button type="submit" onClick={() => this.fetchData(this.state.value)}>
-          Search
-        </button>
-        {/* <p>
-            {this.state.data ? this.state.data.name: <h1>no data</h1>}
-            </p> */}
-      </div>
-    );
-  }
+export interface Character {
+  characters: any;
+  results: Results[]
 }
+export interface Results {
+  image: string,
+  name: string
+}
+function Search() {
+  const url = "https://rickandmortyapi.com/api/character/?name="
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [characters, setCharacters] = useState<Character>();
 
-export default Search;
+console.log("type", searchValue)
+console.log("characters", characters)
+const fetchData = () => {
+ 
+    // if(searchValue.trim() === '') {
+    //   setCharacters(undefined);
+    //   return  
+    // }
+  fetch(url+searchValue)
+    .then(response => response.json())
+    .then(data => {
+      setCharacters(data);
+    })
+ 
+}
+if (characters) {
+  return (
+    <div>  
+  <div>
+    <h2>Search Rick and Morty Characters</h2>
+      <input
+        type="search"
+        name="search"
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+        placeholder="Enter character name..."
+      />
+      <button name="submit" type="submit" onClick={fetchData} >Search</button>
+   </div>
+  {characters && <Section characters={characters} results={[]} />}
+  </div>)
+}
+return (
+  <div>
+    <h2>Search Rick and Morty Characters</h2>
+      <input
+        type="search"
+        name="search"
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+        placeholder="Enter character name..."
+      />
+      <button name="submit" type="submit" onClick={fetchData} >Search</button>
+  </div>
+  );
+};  
+
+export default Search
