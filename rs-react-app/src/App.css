@@ -1,21 +1,19 @@
 body {
-  background-color: #C7853E;
+  background-color: #c7853e;
   text-align: center;
   width: 100%;
   height: 100%;
 }
 
 header {
-
-  height: 20vh
+  height: 20vh;
 }
 ul {
-height: 100px;
+  height: 100px;
 }
 
 main {
-
-  height: 75vh
+  height: 75vh;
 }
 .flex-container {
   display: inline-flex;
@@ -25,9 +23,9 @@ main {
   align-items: center;
   padding: 10px;
   width: 100%;
-  background-color: #F8D061;
-  margin: 10px
+  background-color: #f8d061;
+  margin: 10px;
 }
-.half-wide{
+.half-wide {
   width: 50%;
 }
